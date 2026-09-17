@@ -73,8 +73,8 @@ just build
 ## In memory of Pierre Vannier
 
 This project is dedicated to
-[Pierre Vannier](https://www.linkedin.com/in/pierrevannier/), CEO of
-[Flint](https://flint.sh/), who passed away in 2026.
+[Pierre Vannier](https://fr.linkedin.com/posts/flint-company_cest-avec-une-immense-tristesse-que-nous-activity-7491231081602461697-3nJI),
+CEO of [Flint](https://flint.sh/), who passed away in 2026.
 
 Pierre fought to make sense of AI's rapid rise, its consequences for society,
 for work, and for what it means to be human
