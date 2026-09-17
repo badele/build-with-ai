@@ -315,16 +315,40 @@ body {
 }
 
 .style-section {
-  margin-bottom: 16px;
+  margin-bottom: 4px;
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  overflow: hidden;
 }
 
-.style-section-title {
-  font-size: 11px;
+.style-section-toggle {
+  width: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  background: var(--surface);
+  border: none;
+  color: var(--text);
+  cursor: pointer;
+  font-family: var(--font);
+  font-size: 12px;
   font-weight: 600;
-  text-transform: uppercase;
-  letter-spacing: 0.6px;
-  color: var(--accent);
-  margin-bottom: 8px;
+  padding: 8px 12px;
+  text-align: left;
+  transition: background 0.15s;
+}
+
+.style-section-toggle:hover {
+  background: var(--surface-2);
+}
+
+.style-section-chevron {
+  font-size: 9px;
+  color: var(--muted);
+}
+
+.style-section-body {
+  padding: 10px 12px 4px;
 }
 
 .style-row {
@@ -334,11 +358,16 @@ body {
   margin-bottom: 8px;
 }
 
+.style-row-block {
+  align-items: flex-start;
+}
+
 .style-row-label {
   font-size: 12px;
   color: var(--muted);
-  width: 120px;
+  width: 100px;
   flex-shrink: 0;
+  padding-top: 2px;
 }
 
 .style-slider {
@@ -357,19 +386,26 @@ body {
   flex-shrink: 0;
 }
 
-.style-override-reset {
-  background: none;
-  border: none;
-  color: var(--muted);
-  cursor: pointer;
-  font-size: 13px;
-  padding: 0 2px;
-  line-height: 1;
-  flex-shrink: 0;
+/* Paired controls (alignment, font sizes) */
+
+.style-sub-group {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  gap: 5px;
 }
 
-.style-override-reset:hover {
-  color: var(--text);
+.style-sub-row {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.style-sub-label {
+  font-size: 11px;
+  color: var(--muted);
+  width: 36px;
+  flex-shrink: 0;
 }
 
 .style-align-group {
@@ -431,9 +467,22 @@ body {
 
 .action-bar {
   display: flex;
+  align-items: center;
+  justify-content: space-between;
   gap: 8px;
   flex-wrap: wrap;
   margin-top: 4px;
+}
+
+.action-primary {
+  display: flex;
+  gap: 8px;
+  flex-wrap: wrap;
+}
+
+.action-secondary {
+  display: flex;
+  gap: 4px;
 }
 
 .btn-action {
@@ -451,6 +500,31 @@ body {
 .btn-action:hover {
   background: var(--surface);
   border-color: var(--accent);
+}
+
+.btn-primary {
+  background: var(--accent);
+  border-color: var(--accent);
+  font-weight: 600;
+}
+
+.btn-primary:hover {
+  background: var(--accent-hover);
+  border-color: var(--accent-hover);
+}
+
+.btn-ghost {
+  background: none;
+  border-color: transparent;
+  color: var(--muted);
+  font-size: 12px;
+  padding: 8px 10px;
+}
+
+.btn-ghost:hover {
+  background: none;
+  border-color: transparent;
+  color: var(--text);
 }
 
 .btn-png-group {
@@ -483,17 +557,6 @@ body {
   border-left-color: rgba(255,255,255,0.2);
 }
 
-.btn-primary {
-  background: var(--accent);
-  border-color: var(--accent);
-  font-weight: 600;
-}
-
-.btn-primary:hover {
-  background: var(--accent-hover);
-  border-color: var(--accent-hover);
-}
-
 /* ── SVG Import ─────────────────────────────────────────── */
 .svg-import {
   display: flex;
@@ -502,42 +565,89 @@ body {
   margin-bottom: 4px;
 }
 
-.svg-import-preview {
+.svg-import-trigger {
   display: flex;
   align-items: center;
-  gap: 8px;
-  padding: 6px 8px;
-  background: var(--surface);
-  border: 1px solid var(--accent);
-  border-radius: var(--radius);
+  gap: 6px;
 }
 
 .svg-import-thumb {
-  flex: 1;
-  height: 40px;
-  overflow: hidden;
+  width: 28px;
+  height: 28px;
+  flex-shrink: 0;
   display: flex;
   align-items: center;
   justify-content: center;
+  background: var(--surface);
+  border: 1px solid var(--accent);
+  border-radius: 4px;
+  padding: 3px;
+  overflow: hidden;
 }
 
 .svg-import-thumb svg {
   max-width: 100%;
-  max-height: 40px;
+  max-height: 100%;
 }
 
-.svg-import-remove {
+.svg-trigger-btn {
+  background: none;
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  color: var(--muted);
+  cursor: pointer;
+  font-family: var(--font);
+  font-size: 12px;
+  padding: 3px 10px;
+  transition: color 0.15s, border-color 0.15s;
+}
+
+.svg-trigger-btn:hover {
+  color: var(--text);
+  border-color: var(--accent);
+}
+
+.svg-remove-btn {
   background: none;
   border: none;
   color: var(--muted);
-  font-size: 16px;
   cursor: pointer;
-  padding: 2px 4px;
-  flex-shrink: 0;
+  font-size: 18px;
+  line-height: 1;
+  padding: 0 2px;
+  transition: color 0.15s;
 }
 
-.svg-import-remove:hover {
-  color: var(--text);
+.svg-remove-btn:hover {
+  color: var(--danger);
+}
+
+.svg-add-btn {
+  background: none;
+  border: 1px dashed var(--border);
+  border-radius: var(--radius);
+  color: var(--muted);
+  cursor: pointer;
+  font-family: var(--font);
+  font-size: 12px;
+  padding: 5px 12px;
+  transition: color 0.15s, border-color 0.15s;
+}
+
+.svg-add-btn:hover,
+.svg-add-btn.active {
+  color: var(--accent);
+  border-color: var(--accent);
+}
+
+.svg-import-panel {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  padding: 8px;
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
 }
 
 .svg-import-tabs {

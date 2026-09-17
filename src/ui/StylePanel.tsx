@@ -1,3 +1,4 @@
+import { useState } from "react";
 import { BadgeStyle } from "../badge/types";
 import { DEFAULT_STYLE } from "../badge/theme";
 import { SvgImport } from "./SvgImport";
@@ -67,42 +68,95 @@ function ColorPicker({ label, value, onChange }: ColorProps) {
 
 type Align = "left" | "center" | "right";
 
-interface AlignProps {
-  label: string;
-  value: Align;
-  onChange: (v: Align) => void;
-}
-
-function AlignPicker({ label, value, onChange }: AlignProps) {
+function AlignButtons({ value, onChange }: { value: Align; onChange: (v: Align) => void }) {
   const options: { val: Align; icon: string; title: string }[] = [
-    { val: "left",   icon: "⇤",  title: "Align left" },
-    { val: "center", icon: "⇔",  title: "Align center" },
-    { val: "right",  icon: "⇥",  title: "Align right" },
+    { val: "left",   icon: "⇤", title: "Align left"   },
+    { val: "center", icon: "⇔", title: "Align center" },
+    { val: "right",  icon: "⇥", title: "Align right"  },
   ];
   return (
-    <div className="style-row">
-      <label className="style-row-label">{label}</label>
-      <div className="style-align-group">
-        {options.map(({ val, icon, title }) => (
-          <button
-            key={val}
-            className={`style-align-btn${value === val ? " active" : ""}`}
-            title={title}
-            onClick={() => onChange(val)}
-          >
-            {icon}
-          </button>
-        ))}
+    <div className="style-align-group">
+      {options.map(({ val, icon, title }) => (
+        <button
+          key={val}
+          className={`style-align-btn${value === val ? " active" : ""}`}
+          title={title}
+          onClick={() => onChange(val)}
+        >
+          {icon}
+        </button>
+      ))}
+    </div>
+  );
+}
+
+function AlignPair({
+  titleValue, titleOnChange,
+  fieldsValue, fieldsOnChange,
+}: {
+  titleValue: Align; titleOnChange: (v: Align) => void;
+  fieldsValue: Align; fieldsOnChange: (v: Align) => void;
+}) {
+  return (
+    <div className="style-row style-row-block">
+      <label className="style-row-label">Alignment</label>
+      <div className="style-sub-group">
+        <div className="style-sub-row">
+          <span className="style-sub-label">Title</span>
+          <AlignButtons value={titleValue} onChange={titleOnChange} />
+        </div>
+        <div className="style-sub-row">
+          <span className="style-sub-label">Fields</span>
+          <AlignButtons value={fieldsValue} onChange={fieldsOnChange} />
+        </div>
+      </div>
+    </div>
+  );
+}
+
+function FontSizePair({
+  titleValue, titleOnChange,
+  fieldsValue, fieldsOnChange,
+}: {
+  titleValue: number; titleOnChange: (v: number) => void;
+  fieldsValue: number; fieldsOnChange: (v: number) => void;
+}) {
+  return (
+    <div className="style-row style-row-block">
+      <label className="style-row-label">Font sizes</label>
+      <div className="style-sub-group">
+        <div className="style-sub-row">
+          <span className="style-sub-label">Title</span>
+          <input
+            type="range" className="style-slider"
+            min={10} max={40} value={titleValue}
+            onChange={(e) => titleOnChange(parseFloat(e.target.value))}
+          />
+          <span className="style-row-val">{titleValue}px</span>
+        </div>
+        <div className="style-sub-row">
+          <span className="style-sub-label">Fields</span>
+          <input
+            type="range" className="style-slider"
+            min={8} max={24} value={fieldsValue}
+            onChange={(e) => fieldsOnChange(parseFloat(e.target.value))}
+          />
+          <span className="style-row-val">{fieldsValue}px</span>
+        </div>
       </div>
     </div>
   );
 }
 
 function Section({ title, children }: { title: string; children: React.ReactNode }) {
+  const [open, setOpen] = useState(true);
   return (
     <div className="style-section">
-      <div className="style-section-title">{title}</div>
-      {children}
+      <button className="style-section-toggle" onClick={() => setOpen((o) => !o)}>
+        <span>{title}</span>
+        <span className="style-section-chevron">{open ? "▲" : "▼"}</span>
+      </button>
+      {open && <div className="style-section-body">{children}</div>}
     </div>
   );
 }
@@ -126,48 +180,15 @@ export function StylePanel({ style, onChange }: Props) {
       </div>
 
       <Section title="Global">
-        <Slider
-          label="Width"
-          value={s.width}
-          min={100} max={900}
-          unit="px"
-          onChange={(v) => set("width", v)}
-        />
-        <Slider
-          label="Height"
-          value={s.height}
-          min={20} max={300}
-          unit="px"
-          onChange={(v) => set("height", v)}
-        />
-        <Slider
-          label="Vertical offset"
-          value={s.leftZoneWidth}
-          min={50} max={200}
-          unit="px"
-          onChange={(v) => set("leftZoneWidth", v)}
-        />
-        <Slider
-          label="Horizontal offset"
-          value={s.topRowHeight}
-          min={28} max={100}
-          unit="px"
-          onChange={(v) => set("topRowHeight", v)}
-        />
+        <Slider label="Width"  value={s.width}  min={100} max={900} unit="px" onChange={(v) => set("width",  v)} />
+        <Slider label="Height" value={s.height} min={20}  max={300} unit="px" onChange={(v) => set("height", v)} />
         <ColorPicker label="Background" value={s.bg} onChange={(v) => set("bg", v)} />
       </Section>
 
       <Section title="Left zone">
-        <SvgImport
-          value={s.customSvg}
-          onChange={(svg) => set("customSvg", svg)}
-        />
-        <Slider
-          label="Scale"
-          value={s.leftZoneScale}
-          min={0.2} max={2} step={0.05}
-          onChange={(v) => set("leftZoneScale", v)}
-        />
+        <Slider label="Width" value={s.leftZoneWidth} min={50} max={200} unit="px" onChange={(v) => set("leftZoneWidth", v)} />
+        <SvgImport value={s.customSvg} onChange={(svg) => set("customSvg", svg)} />
+        <Slider label="Scale" value={s.leftZoneScale} min={0.2} max={2} step={0.05} onChange={(v) => set("leftZoneScale", v)} />
         {!s.customSvg && (
           <>
             <ColorPicker label="Gradient start" value={s.leftGradStart} onChange={(v) => set("leftGradStart", v)} />
@@ -177,21 +198,14 @@ export function StylePanel({ style, onChange }: Props) {
       </Section>
 
       <Section title="Right zone">
-        <AlignPicker label="Title align" value={s.titleAlign} onChange={(v) => set("titleAlign", v)} />
-        <AlignPicker label="Fields align" value={s.fieldAlign} onChange={(v) => set("fieldAlign", v)} />
-        <Slider
-          label="Title font"
-          value={s.titleFontSize}
-          min={10} max={40}
-          unit="px"
-          onChange={(v) => set("titleFontSize", v)}
+        <Slider label="Row height" value={s.topRowHeight} min={28} max={100} unit="px" onChange={(v) => set("topRowHeight", v)} />
+        <AlignPair
+          titleValue={s.titleAlign}   titleOnChange={(v) => set("titleAlign", v)}
+          fieldsValue={s.fieldAlign}  fieldsOnChange={(v) => set("fieldAlign", v)}
         />
-        <Slider
-          label="Fields font"
-          value={s.fieldFontSize}
-          min={8} max={24}
-          unit="px"
-          onChange={(v) => set("fieldFontSize", v)}
+        <FontSizePair
+          titleValue={s.titleFontSize}   titleOnChange={(v) => set("titleFontSize", v)}
+          fieldsValue={s.fieldFontSize}  fieldsOnChange={(v) => set("fieldFontSize", v)}
         />
         <ColorPicker label="Title grad. start" value={s.titleGradStart} onChange={(v) => set("titleGradStart", v)} />
         <ColorPicker label="Title grad. end"   value={s.titleGradEnd}   onChange={(v) => set("titleGradEnd",   v)} />
