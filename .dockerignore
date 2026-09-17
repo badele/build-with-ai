@@ -1,0 +1,6 @@
+node_modules/
+dist/
+.git/
+
+# Dev/doc artifacts
+docs/
