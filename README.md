@@ -67,3 +67,14 @@ just test
 # Build for production
 just build
 ```
+
+---
+
+## In memory of Pierre Vannier
+
+This project is dedicated to
+[Pierre Vannier](https://www.linkedin.com/in/pierrevannier/), CEO of
+[Flint](https://flint.sh/), who passed away in 2026.
+
+Pierre fought to make sense of AI's rapid rise, its consequences for society,
+for work, and for what it means to be human
