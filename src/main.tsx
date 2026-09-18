@@ -28,7 +28,7 @@ function App() {
   return (
     <div className="app">
       <header className="app-header">
-        <h1>built<br/>with ai.</h1>
+        <h1>Build with AI</h1>
         <p className="app-subtitle">
           <strong>Own your AI usage — transparently.</strong>{" "}
           Generate a README badge that declares exactly how AI was involved in your project:
