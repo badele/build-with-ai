@@ -1,4 +1,4 @@
-export function downloadSvg(svg: string, filename = "built-with-ai.svg"): void {
+export function downloadSvg(svg: string, filename = "build-with-ai.svg"): void {
   const blob = new Blob([svg], { type: "image/svg+xml" });
   const url = URL.createObjectURL(blob);
   const a = document.createElement("a");
@@ -10,7 +10,7 @@ export function downloadSvg(svg: string, filename = "built-with-ai.svg"): void {
 
 export async function downloadPng(
   svg: string,
-  filename = "built-with-ai.png",
+  filename = "build-with-ai.png",
   scale = 2,
 ): Promise<void> {
   const wMatch = svg.match(/width="([^"]+)"/);

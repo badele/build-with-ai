@@ -1,4 +1,4 @@
-# built with ai.
+# Build with AI
 
 **Own your AI usage — transparently.**
 
@@ -6,7 +6,7 @@ Generate a README badge that declares exactly how AI was involved in your
 project: spec, code, review, human expertise level. Because assuming it is
 better than hiding it.
 
-![Default badge preview](docs/built-with-ai.svg)
+![Default badge preview](docs/build-with-ai.svg)
 
 ---
 
@@ -49,7 +49,7 @@ repository.
 ### 3. Embed the badge in your README
 
 ```markdown
-![Built with AI](docs/built-with-ai.svg)
+![Built with AI](docs/build-with-ai.svg)
 ```
 
 ---

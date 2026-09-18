@@ -39,7 +39,7 @@ export function ActionBar({ svg, config }: Props) {
         <div className="btn-png-group">
           <button
             className="btn-action btn-primary"
-            onClick={() => downloadPng(svg, "built-with-ai.png", pngScale)}
+            onClick={() => downloadPng(svg, "build-with-ai.png", pngScale)}
           >
             Download PNG
           </button>

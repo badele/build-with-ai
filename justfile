@@ -29,10 +29,10 @@ prod:
 down:
     docker compose down
 
-# Generate built-with-ai.svg and built-with-ai.png from BADGE_URL
+# Generate build-with-ai.svg and build-with-ai.png from BADGE_URL
 gen-badge:
-    INPUT_STYLE_URL='{{BADGE_URL}}' INPUT_OUTPUT=docs/built-with-ai.svg npx tsx src/cli/generate.ts
-    node scripts/make-png.cjs docs/built-with-ai.svg docs/built-with-ai.png
+    INPUT_STYLE_URL='{{BADGE_URL}}' INPUT_OUTPUT=docs/build-with-ai.svg npx tsx src/cli/generate.ts
+    node scripts/make-png.cjs docs/build-with-ai.svg docs/build-with-ai.png
 
 # Install pre-commit hooks
 [group('precommit')]

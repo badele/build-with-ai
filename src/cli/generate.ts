@@ -10,7 +10,7 @@ import { parseUrl } from "../url/parse";
 //   4. Paste only the query string part (starting with '?') as the value of style_url
 //      Example: ?text=BUILT+WITH+AI&f=SPEC%3AHUMAN%2BAI&sz_rw=120&c_rgs=6d20ff
 const styleUrl = process.env["INPUT_STYLE_URL"] ?? "";
-const output   = process.env["INPUT_OUTPUT"]    ?? "built-with-ai.svg";
+const output   = process.env["INPUT_OUTPUT"]    ?? "build-with-ai.svg";
 
 const config = parseUrl(styleUrl);
 const svg = generateBadge(config);
