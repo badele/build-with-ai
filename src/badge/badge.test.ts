@@ -68,7 +68,7 @@ describe("generateBadge", () => {
 });
 
 describe("computeLayout", () => {
-  it("wraps fields to multiple lines when too wide", () => {
+  it("always renders all fields on a single line regardless of total width", () => {
     const config = cfg("BUILT WITH AI", [
       ["VERY LONG KEY ONE", "VERY LONG VALUE ONE"],
       ["VERY LONG KEY TWO", "VERY LONG VALUE TWO"],
@@ -76,7 +76,7 @@ describe("computeLayout", () => {
       ["VERY LONG KEY FOUR", "VERY LONG VALUE FOUR"],
       ["VERY LONG KEY FIVE", "VERY LONG VALUE FIVE"],
     ]);
-    expect(computeLayout(config).fieldLines.length).toBeGreaterThan(1);
+    expect(computeLayout(config).fieldLines.length).toBe(1);
   });
 
   it("badge width respects min/max bounds", () => {
